@@ -1,0 +1,25 @@
+# Updated .gitignore file
+
+# Java artifacts
+*.jar
+*.class
+
+# Build directories
+/build/
+/target/
+
+# IntelliJ IDEA
+*.iml
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Logs
+*.log
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
