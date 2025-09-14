@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: player-service
+          uri: lb://player-service
+          predicates:
+            - Path=/players/**
+        - id: coach-service
+          uri: lb://coach-service
+          predicates:
+            - Path=/coaches/**
+        - id: batch-service
+          uri: lb://batch-service
+          predicates:
+            - Path=/batches/**
+        - id: fee-service
+          uri: lb://fee-service
+          predicates:
+            - Path=/fees/**
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/notifications/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/

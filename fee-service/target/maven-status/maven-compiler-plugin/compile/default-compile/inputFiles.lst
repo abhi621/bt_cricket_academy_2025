@@ -1,0 +1,8 @@
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\fee\controller\FeeController.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\fee\FeeServiceApplication.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\fee\model\Fee.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\fee\repository\FeeRepository.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\payment\controller\PaymentController.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\payment\model\Payment.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\payment\PaymentServiceApplication.java
+E:\cricket academy management\fee-service\src\main\java\com\bt\cricketacademy\payment\repository\PaymentRepository.java

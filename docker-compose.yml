@@ -1,0 +1,131 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cricket_academy
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  discovery-service:
+    build: ./discovery-service
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+    depends_on:
+      - mysql
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+    depends_on:
+      - discovery-service
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+      - JWT_SECRET=changeme
+    depends_on:
+      - mysql
+      - discovery-service
+
+  player-service:
+    build: ./player-service
+    ports:
+      - "8082:8082"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+    depends_on:
+      - mysql
+      - discovery-service
+
+  coach-service:
+    build: ./coach-service
+    ports:
+      - "8083:8083"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+    depends_on:
+      - mysql
+      - discovery-service
+
+  batch-service:
+    build: ./batch-service
+    ports:
+      - "8084:8084"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+    depends_on:
+      - mysql
+      - discovery-service
+
+  fee-service:
+    build: ./fee-service
+    ports:
+      - "8085:8085"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+    depends_on:
+      - mysql
+      - discovery-service
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "8086:8086"
+    environment:
+      - EUREKA_HOST=discovery-service
+      - EUREKA_PORT=8761
+      - MAIL_HOST=smtp.example.com
+      - MAIL_PORT=587
+      - MAIL_USER=youruser
+      - MAIL_PASSWORD=yourpass
+    depends_on:
+      - discovery-service
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - gateway-service
+
+volumes:
+  db_data:
