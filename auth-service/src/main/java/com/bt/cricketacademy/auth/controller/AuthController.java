@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+// Removed @CrossOrigin; CORS is handled at Gateway
 public class AuthController {
 
     @Autowired
@@ -68,4 +68,3 @@ public class AuthController {
         return ResponseEntity.ok(pendingUsers);
     }
 }
-
