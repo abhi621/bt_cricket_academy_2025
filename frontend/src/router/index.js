@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import authService from '../services/authService.js';
+import { useAuthStore } from '../stores/authStore.js';
 
+// Import components
+import HomePage from '../pages/HomePage.vue';
 import LoginPage from '../pages/LoginPage.vue';
-import SelfRegistrationPage from '../pages/SelfRegistrationPage.vue';
-import DashboardPage from '../pages/DashboardPage.vue';
-import ApprovalDashboard from '../pages/ApprovalDashboard.vue';
+import RegisterPage from '../pages/RegisterPage.vue';
+import AdminDashboard from '../pages/AdminDashboard.vue';
+import SupportDashboard from '../pages/SupportDashboard.vue';
+import CoachDashboard from '../pages/CoachDashboard.vue';
+import PlayerDashboard from '../pages/PlayerDashboard.vue';
 
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    name: 'Home',
+    component: HomePage,
+    meta: { public: true }
   },
   {
     path: '/login',
@@ -20,23 +26,57 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: SelfRegistrationPage,
+    component: RegisterPage,
     meta: { requiresGuest: true }
   },
   {
+    path: '/admin',
+    name: 'AdminDashboard',
+    component: AdminDashboard,
+    meta: { 
+      requiresAuth: true,
+      requiresRole: ['ADMIN']
+    }
+  },
+  {
+    path: '/support',
+    name: 'SupportDashboard',
+    component: SupportDashboard,
+    meta: { 
+      requiresAuth: true,
+      requiresRole: ['SUPPORT']
+    }
+  },
+  {
+    path: '/coach',
+    name: 'CoachDashboard',
+    component: CoachDashboard,
+    meta: { 
+      requiresAuth: true,
+      requiresRole: ['COACH']
+    }
+  },
+  {
+    path: '/player',
+    name: 'PlayerDashboard',
+    component: PlayerDashboard,
+    meta: { 
+      requiresAuth: true,
+      requiresRole: ['PLAYER']
+    }
+  },
+  // Legacy routes for backward compatibility
+  {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: DashboardPage,
-    meta: { requiresAuth: true }
+    redirect: (to) => {
+      const authStore = useAuthStore();
+      const role = authStore.role?.toLowerCase();
+      return role ? `/${role}` : '/login';
+    }
   },
   {
     path: '/approval-dashboard',
-    name: 'ApprovalDashboard',
-    component: ApprovalDashboard,
-    meta: { 
-      requiresAuth: true,
-      requiresRole: ['ADMIN', 'SUPPORT']
-    }
+    redirect: '/admin'
   }
 ];
 
@@ -47,8 +87,9 @@ const router = createRouter({
 
 // Navigation guards
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = authService.isAuthenticated();
-  const currentUser = authService.getCurrentUser();
+  const authStore = useAuthStore();
+  const isAuthenticated = authStore.isAuthenticated;
+  const userRole = authStore.role;
 
   // Check if route requires authentication
   if (to.meta.requiresAuth && !isAuthenticated) {
@@ -58,15 +99,19 @@ router.beforeEach((to, from, next) => {
 
   // Check if route requires guest (unauthenticated user)
   if (to.meta.requiresGuest && isAuthenticated) {
-    next('/dashboard');
+    // Redirect to appropriate dashboard based on role
+    const role = userRole?.toLowerCase();
+    next(role ? `/${role}` : '/');
     return;
   }
 
   // Check if route requires specific role
-  if (to.meta.requiresRole && currentUser) {
-    const hasRequiredRole = to.meta.requiresRole.includes(currentUser.role);
+  if (to.meta.requiresRole && userRole) {
+    const hasRequiredRole = to.meta.requiresRole.includes(userRole);
     if (!hasRequiredRole) {
-      next('/dashboard'); // Redirect to dashboard if user doesn't have required role
+      // Redirect to appropriate dashboard based on role
+      const role = userRole?.toLowerCase();
+      next(role ? `/${role}` : '/');
       return;
     }
   }
