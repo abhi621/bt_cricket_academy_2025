@@ -1,0 +1,35 @@
+{
+  "about": "BT Cricket Academy is a premier training facility dedicated to nurturing cricket talent and developing players of all skill levels. Our state-of-the-art facilities and experienced coaches provide comprehensive training programs designed to enhance technical skills, fitness, and game strategy.",
+  "feeStructure": [
+    {
+      "category": "Beginner",
+      "amount": "2000",
+      "duration": "Monthly",
+      "description": "Basic coaching for newcomers to cricket"
+    },
+    {
+      "category": "Intermediate",
+      "amount": "3000", 
+      "duration": "Monthly",
+      "description": "Advanced techniques and match preparation"
+    },
+    {
+      "category": "Advanced",
+      "amount": "4000",
+      "duration": "Monthly", 
+      "description": "Professional level training and mentoring"
+    },
+    {
+      "category": "Personal Training",
+      "amount": "1500",
+      "duration": "Per Session",
+      "description": "One-on-one coaching sessions"
+    }
+  ],
+  "contact": {
+    "phone": "+91-7518171558",
+    "email": "info@btcricketacademy.com",
+    "address": "BT Cricket Academy, Sports Complex, New Delhi, India",
+    "timings": "Monday - Saturday: 6:00 AM - 8:00 PM"
+  }
+}

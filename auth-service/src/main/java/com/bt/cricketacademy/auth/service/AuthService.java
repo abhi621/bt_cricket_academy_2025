@@ -38,12 +38,12 @@ public class AuthService {
             return new AuthResponse("Invalid credentials");
         }
 
-        if (!user.isApproved()) {
+        if (user.getStatus() != AppUser.UserStatus.ACTIVE) {
             return new AuthResponse("Your account is not approved yet. Please contact academy staff.");
         }
 
         String token = generateToken(user);
-        return new AuthResponse(token, user.getUsername(), user.getRole(), user.isApproved());
+        return new AuthResponse(token, user.getUsername(), user.getRole(), user.getStatus() == AppUser.UserStatus.ACTIVE);
     }
 
     public AuthResponse register(RegisterRequest registerRequest) {
@@ -60,33 +60,34 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setEmail(registerRequest.getEmail());
         user.setRole(registerRequest.getRole());
+        user.setName(registerRequest.getName() != null ? registerRequest.getName() : registerRequest.getUsername());
+        user.setPhone(registerRequest.getPhone());
         
-        // For self-registration (COACH/PLAYER), set approved=false
+        // For self-registration (COACH/PLAYER), set status=PENDING
         if ("COACH".equals(registerRequest.getRole()) || "PLAYER".equals(registerRequest.getRole())) {
-            user.setApproved(false);
-            user.setActive(false);
+            user.setStatus(AppUser.UserStatus.PENDING);
         } else {
-            // Admin/Support can register with approved=true
-            user.setApproved(true);
-            user.setActive(true);
+            // Admin/Support can register with status=ACTIVE
+            user.setStatus(AppUser.UserStatus.ACTIVE);
         }
 
         userRepository.save(user);
         
         // Log notification for pending approval (can be enhanced with actual notification service)
-        if (!user.isApproved()) {
+        if (user.getStatus() == AppUser.UserStatus.PENDING) {
             System.out.println("New registration pending approval: " + user.getUsername() + " (" + user.getEmail() + ")");
         }
 
         return new AuthResponse("Registration successful. " + 
-            (user.isApproved() ? "You can now login." : "Your registration is pending approval. You will be notified once approved."));
+            (user.getStatus() == AppUser.UserStatus.ACTIVE ? "You can now login." : "Your registration is pending approval. You will be notified once approved."));
     }
 
     public AppUser approveUser(Long userId) {
         AppUser user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setApproved(true);
-            user.setActive(true);
+            user.setStatus(AppUser.UserStatus.ACTIVE);
+            user.setApprovedAt(java.time.LocalDateTime.now());
+            // TODO: Set approvedBy to current admin's ID when security context is available
             userRepository.save(user);
             System.out.println("User approved: " + user.getUsername() + " (" + user.getEmail() + ")");
         }
@@ -94,7 +95,8 @@ public class AuthService {
     }
 
     public List<AppUser> getPendingApprovals() {
-        return userRepository.findByApprovedFalse();
+        // Find users with PENDING status
+        return userRepository.findByStatus(AppUser.UserStatus.PENDING);
     }
 
     private String generateToken(AppUser user) {

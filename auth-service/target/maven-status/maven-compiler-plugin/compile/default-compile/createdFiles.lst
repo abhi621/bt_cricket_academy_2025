@@ -10,3 +10,4 @@ com/bt/cricketacademy/auth/AuthServiceApplication.class
 com/bt/cricketacademy/auth/config/SecurityConfig.class
 com/bt/cricketacademy/auth/service/AuthService.class
 com/bt/cricketacademy/auth/dto/RegisterRequest.class
+com/bt/cricketacademy/auth/model/AppUser$UserStatus.class
