@@ -1,5 +1,12 @@
 /home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/AuthServiceApplication.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/config/JwtAuthenticationFilter.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/config/SecurityConfig.java
 /home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/controller/AuthController.java
 /home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/controller/ImpersonationController.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/dto/AuthResponse.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/dto/LoginRequest.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/dto/RegisterRequest.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/dto/UserApprovalRequest.java
 /home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/model/AppUser.java
 /home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/repository/AppUserRepository.java
+/home/runner/work/bt_cricket_academy_2025/bt_cricket_academy_2025/auth-service/src/main/java/com/bt/cricketacademy/auth/service/AuthService.java
