@@ -13,8 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
+
+import io.jsonwebtoken.security.Keys;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -31,8 +37,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             
             try {
-                Claims claims = Jwts.parser()
-                        .setSigningKey(jwtSecret.getBytes())
+                Claims claims = Jwts.parserBuilder()
+                        .setSigningKey(signingKey())
+                        .build()
                         .parseClaimsJws(token)
                         .getBody();
                 
@@ -40,9 +47,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String role = claims.get("role", String.class);
                 
                 if (username != null && role != null) {
+                    String normalized = role.startsWith("ROLE_") ? role.substring(5) : role;
                     List<SimpleGrantedAuthority> authorities = Arrays.asList(
-                        new SimpleGrantedAuthority(role),
-                        new SimpleGrantedAuthority(role.replace("ROLE_", ""))
+                        new SimpleGrantedAuthority("ROLE_" + normalized),
+                        new SimpleGrantedAuthority(normalized)
                     );
                     
                     UsernamePasswordAuthenticationToken authentication = 
@@ -57,5 +65,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         
         filterChain.doFilter(request, response);
+    }
+
+    private Key signingKey() {
+        try {
+            byte[] keyBytes = MessageDigest.getInstance("SHA-256").digest(jwtSecret.getBytes(StandardCharsets.UTF_8));
+            return Keys.hmacShaKeyFor(keyBytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("SHA-256 not available", e);
+        }
     }
 }
