@@ -1,27 +1,28 @@
 <template>
-  <div>
-    <RoleSwitch v-if="role === 'ADMIN' || role === 'SUPPORT'" :role="role" @switchRole="switchRole" />
-    <component :is="dashboardComponent" />
+  <div id="app">
+    <router-view />
   </div>
 </template>
-<script setup>
-import { ref, computed } from 'vue';
-import RoleSwitch from './components/RoleSwitch.vue';
-import AdminDashboard from './pages/AdminDashboard.vue';
-import SupportDashboard from './pages/SupportDashboard.vue';
-import CoachDashboard from './pages/CoachDashboard.vue';
-import PlayerDashboard from './pages/PlayerDashboard.vue';
 
-const role = ref('ADMIN');
-const dashboardComponent = computed(() => {
-  switch (role.value) {
-    case 'ADMIN': return AdminDashboard;
-    case 'SUPPORT': return SupportDashboard;
-    case 'COACH': return CoachDashboard;
-    case 'PLAYER': return PlayerDashboard;
-    default: return PlayerDashboard;
-  }
-});
-function switchRole(newRole) { role.value = newRole; }
+<script setup>
+// App component now uses router-view to render different pages
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+#app {
+  min-height: 100vh;
+}
+</style>
 

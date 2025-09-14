@@ -1,4 +1,4 @@
-com\bt\cricketacademy\batch\model\Batch.class
-com\bt\cricketacademy\batch\repository\BatchRepository.class
-com\bt\cricketacademy\batch\BatchServiceApplication.class
-com\bt\cricketacademy\batch\controller\BatchController.class
+com/bt/cricketacademy/batch/model/Batch.class
+com/bt/cricketacademy/batch/BatchServiceApplication.class
+com/bt/cricketacademy/batch/controller/BatchController.class
+com/bt/cricketacademy/batch/repository/BatchRepository.class

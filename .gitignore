@@ -1,3 +1,30 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Maven build output
+target/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.production
+=======
 # Updated .gitignore file
 
 # Java artifacts
