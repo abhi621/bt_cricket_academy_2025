@@ -1,8 +1,8 @@
-com\bt\cricketacademy\player\model\Player.class
-com\bt\cricketacademy\student\model\Student.class
-com\bt\cricketacademy\student\controller\StudentController.class
-com\bt\cricketacademy\student\StudentServiceApplication.class
-com\bt\cricketacademy\player\PlayerServiceApplication.class
-com\bt\cricketacademy\student\repository\StudentRepository.class
-com\bt\cricketacademy\player\controller\PlayerController.class
-com\bt\cricketacademy\player\repository\PlayerRepository.class
+com/bt/cricketacademy/student/repository/StudentRepository.class
+com/bt/cricketacademy/player/PlayerServiceApplication.class
+com/bt/cricketacademy/student/StudentServiceApplication.class
+com/bt/cricketacademy/student/model/Student.class
+com/bt/cricketacademy/player/repository/PlayerRepository.class
+com/bt/cricketacademy/player/model/Player.class
+com/bt/cricketacademy/player/controller/PlayerController.class
+com/bt/cricketacademy/student/controller/StudentController.class

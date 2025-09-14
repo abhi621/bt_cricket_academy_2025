@@ -1,4 +1,4 @@
-com\bt\cricketacademy\coach\repository\CoachRepository.class
-com\bt\cricketacademy\coach\controller\CoachController.class
-com\bt\cricketacademy\coach\model\Coach.class
-com\bt\cricketacademy\coach\CoachServiceApplication.class
+com/bt/cricketacademy/coach/model/Coach.class
+com/bt/cricketacademy/coach/CoachServiceApplication.class
+com/bt/cricketacademy/coach/controller/CoachController.class
+com/bt/cricketacademy/coach/repository/CoachRepository.class

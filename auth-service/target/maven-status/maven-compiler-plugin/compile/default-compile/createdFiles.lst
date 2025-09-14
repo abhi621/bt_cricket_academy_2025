@@ -1,5 +1,5 @@
-com\bt\cricketacademy\auth\controller\AuthController.class
-com\bt\cricketacademy\auth\controller\ImpersonationController.class
-com\bt\cricketacademy\auth\model\AppUser.class
-com\bt\cricketacademy\auth\repository\AppUserRepository.class
-com\bt\cricketacademy\auth\AuthServiceApplication.class
+com/bt/cricketacademy/auth/AuthServiceApplication.class
+com/bt/cricketacademy/auth/model/AppUser.class
+com/bt/cricketacademy/auth/controller/ImpersonationController.class
+com/bt/cricketacademy/auth/repository/AppUserRepository.class
+com/bt/cricketacademy/auth/controller/AuthController.class
